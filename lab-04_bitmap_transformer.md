@@ -19,7 +19,7 @@
 
 ## Description
 
-For this assignment you will be building a bitmap (`.bmp`) reader and transformer. It will read a bitmap in from disk, run one or more color transforms on the bitmap and then write it out to a new file. This project will require the use of node buffers in order to manipulate binary data. Your project should include tests, as well as a `.gulpfile`, `package.json`, `.eslintrc`, `README.md`, and a `.gitignore`. Make sure to run all your code through eslint. The process will look something like this:
+For this assignment you will be building a bitmap (`.bmp`) reader and transformer. It will read a bitmap in from disk, run one or more color transforms on the bitmap and then write it out to a new file. This project will require the use of node buffers in order to manipulate binary data. Your project should include tests, as well as a `gulpfile.js`, `package.json`, `.eslintrc`, `README.md`, and a `.gitignore`. Make sure to run all your code through eslint. The process will look something like this:
 
 1. open the original bitmap file using fs and read it into a buffer
 2. convert the buffer header data into a Javascript Object (using constructors)
@@ -35,8 +35,6 @@ The wikipedia article found here [Bitmap Specification](https://en.wikipedia.org
 
 ## Bonus:
 
-* ability to handle palette and non-palette bitmaps
-* ability to multiple types of bitmaps (not just BM)
 * ability to handle various sized bitmap
 * ability to handle LE and BE computers with a single if statement
 * utilizes a command line interface (CLI)
