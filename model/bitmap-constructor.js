@@ -2,12 +2,18 @@
 
 const fs = require('fs');
 
-function bitmap(callback) {
-  fs.readFile(`${__dirname}/../assets/palette-bitmap.bmp`, function(err, data) {
-    if (err) return callback(err);
-    callback(null, data);
-  });
+const callback = function (err, data, convert) {
+  if (err) throw err;
+  let transform = new BufferData(data);
+  transform[convert]();
 };
+
+function bitmap(file, callback, color) {
+  return fs.readFile(file, function(err, data) {
+    if (err) return callback(err);
+    return callback(null, data, color);
+  });
+}
 
 function BufferData(data) {
   this.buffer = data;
@@ -28,36 +34,16 @@ function BufferData(data) {
   this.number_colors = data.readInt8(46);
   this.important_colors = data.readInt8(50);
   this.colorArray = data.slice(54, 1078);
+  this.pixels = data.slice(1078, 11077);
 }
 
 BufferData.prototype.black = function () {
   this.colorArray.fill(0);
-  for (var i = 0; i < this.colorArray.length; i += 4) {
-    this.colorArray[i].fill(255);
-  }
 };
 
-bitmap(function (err, data) {
-  if (err) throw err;
-  let buffer = new BufferData(data);
-  buffer.black();
-});
+BufferData.prototype.white = function () {
+  this.colorArray.fill(255);
+};
 
 
-// console.log('bitmap', bitmap);
-// console.log('bitmapCallbak', bitmapCallbak);
-
-bitmap(main);
-
-function blackTransform(err, data) {
-  if (err) throw err;
-  let bdata = new BufferData(data);
-  bdata.black();
-  console.log('data', bdata);
-  return bdata;
-}
-
-
-// console.log('bm', bitmap(bitmapCallbak));
-
-// var transformOne = new BufferData(bitmap(bitmapCallbak));
+bitmap(`${__dirname}/../assets/palette-bitmap.bmp`, callback, 'white');
