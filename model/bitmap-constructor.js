@@ -3,10 +3,12 @@
 const fs = require('fs');
 let convert = process.argv[2];
 
+if(!convert) convert = console.error('please pass an inversion flag');
+
 const callback = function (err, data, convert) {
   if (err) throw err;
   let transform = new BufferData(data);
-  transform[convert]();
+  if(convert) transform[convert]();
   console.log(transform);
 };
 
