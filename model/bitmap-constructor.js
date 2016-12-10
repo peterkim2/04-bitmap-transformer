@@ -1,11 +1,13 @@
 'use strict';
 
 const fs = require('fs');
+let convert = process.argv[2];
 
 const callback = function (err, data, convert) {
   if (err) throw err;
   let transform = new BufferData(data);
   transform[convert]();
+  console.log(transform);
 };
 
 function bitmap(file, callback, color) {
@@ -46,4 +48,4 @@ BufferData.prototype.white = function () {
 };
 
 
-bitmap(`${__dirname}/../assets/palette-bitmap.bmp`, callback, 'white');
+bitmap(`${__dirname}/../assets/palette-bitmap.bmp`, callback, convert);
