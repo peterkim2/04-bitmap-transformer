@@ -1,15 +1,26 @@
 'use strict';
 
 const fs = require('fs');
+let convert = process.argv[2];
 
-const bitmap = function(callback) {
-  fs.readFile(`${__dirname}/../assets/palette-bitmap.bmp`, function(err, data) {
-    if (err) return callback(err);
-    callback(null, data);
-  });
+if(!convert) convert = console.error('please pass an inversion flag');
+
+const callback = function (err, data, convert) {
+  if (err) throw err;
+  let transform = new BufferData(data);
+  if(convert) transform[convert]();
+  console.log(transform);
 };
 
+function bitmap(file, callback, color) {
+  return fs.readFile(file, function(err, data) {
+    if (err) return callback(err);
+    return callback(null, data, color);
+  });
+}
+
 function BufferData(data) {
+  this.buffer = data;
   this.id = data.toString('utf-8', 0, 2);
   this.size = data.readInt32LE(2);
   this.unused1 = data.toString('hex', 6, 8);
@@ -26,16 +37,17 @@ function BufferData(data) {
   this.pixel_vertical = data.readInt32LE(42);
   this.number_colors = data.readInt32LE(46);
   this.important_colors = data.readInt32LE(50);
-  this.redbitmask = data.readInt32LE(54);
-  this.greenbitmask = data.readInt32LE(58);
-  this.bluebitmask = data.readInt32LE(62);
-  this.alphabitmask = data.readInt32LE(66);
-  this.array = data.slice(122, 1078);
-  this.blue = data.readUInt32LE(126);
+  this.colorArray = data.slice(54, 1078);
+  this.pixels = data.slice(1078, 11077);
 }
 
-bitmap(function (err, data) {
-  if (err) throw err;
-  var transformOne = new BufferData(data);
-  console.log(transformOne);
-});
+BufferData.prototype.black = function () {
+  this.colorArray.fill(0);
+};
+
+BufferData.prototype.white = function () {
+  this.colorArray.fill(255);
+};
+
+
+bitmap(`${__dirname}/../assets/palette-bitmap.bmp`, callback, convert);
