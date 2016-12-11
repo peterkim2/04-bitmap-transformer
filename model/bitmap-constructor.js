@@ -21,34 +21,6 @@ exports.BufferData = function(data) {
   this.colorArray = data.slice(54, this.offset);
 };
 
-exports.callback = function (err, data, convert) {
-  if (err) throw err;
-  let transform = new exports.BufferData(data);
-  if(convert) transform[convert]();
-  console.log(transform);
-};
-
-exports.bitmap = function (file, callback, color) {
-  return fs.readFile(file, function(err, data) {
-    if (err) return callback(err);
-    fs.writeFile(`${__dirname}/../assets/${color}.bmp`, data, function(err, data) {
-      if(err) throw err;
-    });
-    return callback(null, data, color);
-  });
-};
-
-// Index.js
-exports.filePath = `${__dirname}/../assets/palette-bitmap.bmp`;
-
-exports.bitmap(exports.filePath, exports.callback, 'green');
-exports.bitmap(exports.filePath, exports.callback, 'white');
-exports.bitmap(exports.filePath, exports.callback, 'invert');
-exports.bitmap(exports.filePath, exports.callback, 'greyscale');
-exports.bitmap(exports.filePath, exports.callback, 'luminosity');
-exports.bitmap(exports.filePath, exports.callback, 'black');
-
-// Individual Transforms
 exports.BufferData.prototype.green = function() {
   for (var i = 0, j = this.colorArray.length; i < j; i += 4) {
     let color = this.colorArray.slice(i, i+4);
