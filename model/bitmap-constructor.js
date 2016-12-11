@@ -1,12 +1,7 @@
 'use strict';
 
-// const readFileHelper = require('../lib/bitmap-file-helper.js');
-// const index = require('../index.js');
-const fs = require('fs');
-
 module.exports = exports = {};
 
-// Buffer constructor to read bitmap header info.
 exports.BufferData = function(data) {
   this.buffer = data;
   this.id = data.toString('utf-8', 0, 2);
@@ -36,9 +31,7 @@ exports.BufferData.prototype.white = function() {
 
 exports.BufferData.prototype.invert = function() {
   for (var i = 0, j = this.colorArray.length; i < j; i += 4) {
-    // console.log('Prototype transform:', this.colorArray);
     let color = this.colorArray.slice(i, i+4);
-    // console.log(color);
     let maxColor = this.number_colors - 1;
     color[0] = maxColor - color[0];
     color[1] = maxColor - color[1];
