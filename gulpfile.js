@@ -4,10 +4,19 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
 const cache = require('gulp-cache');
+const istanbul = require('gulp-istanbul');
 
-gulp.task('test', function() {
+gulp.task('pre-test', function() {
+  return gulp.src(['./lib/*.js', './model/*.js', '!node_modules/**'])
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire());
+});
+
+gulp.task('test', ['pre-test'], function() {
   gulp.src('./test/*-test.js', { read: false})
-  .pipe(mocha({ report: 'spec'}));
+  .pipe(mocha({ report: 'spec'}))
+  .pipe(istanbul.writeReports())
+  .pipe(istanbul.enforceThresholds({thresholds: {global: 90}}));
 });
 
 gulp.task('lint', function() {
