@@ -22,6 +22,7 @@ exports.BufferData.prototype.green = function() {
     let maxColor = this.number_colors - 1;
     color[0] = color[2] = color[3] = 0;
     color[1] *= maxColor;
+    // console.log(color);
   }
 };
 

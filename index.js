@@ -23,8 +23,16 @@ case 'luminosity':
 case 'black':
   readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'black');
   break;
+case 'all':
+  readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'green');
+  readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'white');
+  readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'invert');
+  readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'greyscale');
+  readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'luminosity');
+  readFileHelper.bitmap(readFileHelper.filePath, readFileHelper.callback, 'black');
+  break;
 default:
-  console.log('Please enter one of the following: green, white, invert, grescale, luminosity, black');
+  console.log('Please enter one of the following: green, white, invert, greyscale, luminosity, black or all');
 }
 
 exports.convert = process.argv[2];

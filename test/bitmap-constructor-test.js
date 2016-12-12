@@ -18,5 +18,24 @@ describe('Testing constructor', function() {
       });
     });
   });
-  
+});
+
+describe('Buffer data', function() {
+  it('should return buffer data', function(done) {
+    this.buffer = new bitmap.BufferData(fs.readFileSync(readFileHelper.filePath)); {
+      done();
+    }
+    it('should return an object', function() {
+      expect(this.buffer).to.be.an('object');
+    });
+  });
+});
+
+describe('Transforms', function() {
+  it('should have green transform', function(done) {
+    bitmap.BufferData(function(err, buffer) {
+      console.log(buffer);
+      done();
+    });
+  });
 });

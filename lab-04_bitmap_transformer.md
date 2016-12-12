@@ -30,7 +30,7 @@ The wikipedia article found here [Bitmap Specification](https://en.wikipedia.org
 
 * your project should have three ***(or more)*** transforms
 * invert the colors (***hint:*** subtract every color value from the max color value which is 255),
-* grayscale the colors (***hint:*** multiply each color value by a constant, just make sure your values don't go over 255)
+* greyscale the colors (***hint:*** multiply each color value by a constant, just make sure your values don't go over 255)
 * (red|green|blue)scale the colors (***hint:*** same as above but only multiply one of the colors)
 
 ## Bonus:
